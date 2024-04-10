@@ -94,6 +94,31 @@ pinMode(gpios[i], INPUT);
 send();
 }
 
+void InitESPNow() {
+//Se a inicialização foi bem sucedida
+if (esp_now_init() == ESP_OK) {
+Serial.println('ESPNow Init Sucess');
+}
+
+//Se houve erro na inicialização
+else {
+Serial.println('ESPNow Init Failed');
+ESP.restart();
+}
+}
+
+//Função que ira fazer a leitura dos pinos
+//que estão no array gpios e enviar os valores
+//lidos para os outros ESPs
+
+void send() {
+          //Array que ira armazenar os valores lidos
+          uint8_t values[gpioCount];
+//Para cada pino
+for(int i=0; i<gpioCount;i++) {
+//Lê o estado do pino e armazena no array
+values[i] = digitalRead(gpios[i]);
+}
 
 
    
